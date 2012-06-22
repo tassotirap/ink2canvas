@@ -315,10 +315,6 @@ class TestCanvas(unittest.TestCase):
     def testRestore(self):
         self.canvas.restore()
         self.assertEqual(self.canvas.code[0],"\tctx.restore();\n")
-        
-    def testSetGradient(self):
-        retorno = self.canvas.setGradient(None)
-        self.assertEqual(retorno,None)
                
     def testClosePath(self):
         text = "ctx.closePath();"

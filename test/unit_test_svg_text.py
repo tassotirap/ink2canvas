@@ -34,13 +34,13 @@ class TestTextAbstractShape(unittest.TestCase):
         self.assertEqual(x, 188.89853)
         self.assertEqual(y, 117.97108)
     
-    def testText_helper(self):
-        stringRetornada = self.text.text_helper(self.node)
+    def testTextHelper(self):
+        stringRetornada = self.text.textHelper(self.node)
         self.assertEqual(stringRetornada, "TESTE\n  ")
         
         
-    def testset_text_style(self):
-        self.text.set_text_style(self.text.getStyle())
+    def testsetTextStyle(self):
+        self.text.setTextStyle(self.text.getStyle())
         self.assertEqual(self.text.canvasContext.code, ['\tctx.font = "normal normal 40px Sans";\n'])
     
     def testDraw(self):

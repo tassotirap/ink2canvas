@@ -4,10 +4,11 @@ Created on 23/05/2012
 @author: thiago
 '''
 import unittest
-from ink2canvas.main import Ink2Canvas
-from ink2canvas.svg import Use, G
 import sys
+sys.path.append('..')
 
+from ink2canvas.svg import Use, G
+from ink2canvas.main import Ink2Canvas
 
 #TODO: ver se eh para fazermos as transformacoes baseados nos paramentros do pai ou do filho(use)
 #      ver o x e y de quem eu uso(os do use estao todos 0 , 0) 

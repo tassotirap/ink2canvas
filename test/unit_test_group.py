@@ -1,9 +1,9 @@
 import sys
 import unittest
 from inkex import Effect
-from ink2canvas.main import Ink2Canvas
 sys.path.append('..')
 
+from ink2canvas.main import Ink2Canvas
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -20,11 +20,6 @@ class Test(unittest.TestCase):
     def testCompareUngroupedAndGroupedEquals(self):
         self.assertEquals(self.ink2canvasGroupedEdited.core.canvas.output(), 
                           self.ink2canvasGrouped.core.canvas.output())
-        
-
-
-        
-
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
