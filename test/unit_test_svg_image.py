@@ -27,7 +27,7 @@ class TestSvg_image_unit_test(unittest.TestCase):
         return ""   
     
     def testGetData(self):
-        x, y, weight, height, href = self.image.get_data()
+        x, y, weight, height, href = self.image.getData()
         href = href[-12:]
         array = [x ,y, weight, height, href]
         imageArray = [97.285713, 255.6479, 554, 422, "5_images.jpg"]

@@ -14,7 +14,7 @@ class Image(AbstractShape):
     def draw(self, isClip=False):
         if self.hasTransform():
             transMatrix = self.getTransform()
-            self.ctx.transform(*transMatrix) # unpacks argument list
+            self.canvasContext.transform(*transMatrix) # unpacks argument list
         if not isClip:
             style = self.getStyle()
             self.setStyle(style)

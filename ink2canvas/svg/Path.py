@@ -1,3 +1,4 @@
+import math
 from ink2canvas.svg.AbstractShape import AbstractShape
 from ink2canvas.lib.simplepath import parsePath
 
@@ -23,7 +24,6 @@ class Path(AbstractShape):
     def pathArcTo(self, data):
         #http://www.w3.org/TR/SVG11/implnote.html#ArcImplementationNotes
         # code adapted from http://code.google.com/p/canvg/
-        import math
         x1 = self.currentPosition[0]
         y1 = self.currentPosition[1]
         x2 = data[5]
@@ -37,15 +37,9 @@ class Path(AbstractShape):
         if x1 == x2 and y1 == y2:
             return
 
-        #compute (x1', y1')
-        _x1 = math.cos(angle) * (x1 - x2) / 2.0 + math.sin(angle) * (y1 - y2) / 2.0
-        _y1 = -math.sin(angle) * (x1 - x2) / 2.0 + math.cos(angle) * (y1 - y2) / 2.0
+        _x1, _y1 = self.compute(x1, x2, y1, y2, angle)
 
-        #adjust radii
-        l = _x1**2 / rx**2 + _y1**2 / ry**2
-        if l > 1:
-            rx *= math.sqrt(l)
-            ry *= math.sqrt(l)
+        rx, ry = self.adjustRadii(_x1, _y1, rx, ry)
 
         #compute (cx', cy')
         numr = (rx**2 * ry**2) - (rx**2 * _y1**2) - (ry**2 * _x1**2)
@@ -92,6 +86,18 @@ class Path(AbstractShape):
         self.canvasContext.translate(-cx, -cy)
         self.currentPosition = x2, y2
 
+    def compute(self, x1, x2, y1, y2, angle):
+        _x1 = math.cos(angle) * (x1 - x2) / 2.0 + math.sin(angle) * (y1 - y2) / 2.0
+        _y1 = -math.sin(angle) * (x1 - x2) / 2.0 + math.cos(angle) * (y1 - y2) / 2.0
+        return _x1, _y1
+
+    def adjustRadii(self, _x1, _y1, rx, ry):
+        l = _x1**2 / rx**2 + _y1**2 / ry**2
+        if l > 1:
+            rx *= math.sqrt(l)
+            ry *= math.sqrt(l)
+        return rx, ry
+
     def draw(self, isClip=False):
         path = self.getData()
         if not isClip:
@@ -117,7 +123,7 @@ class Path(AbstractShape):
         
         if not isClip: 
             self.canvasContext.closePath(comm == "Z")
-            if(not gradientFill):        
+            if(not gradientFill):
                 self.canvasContext.fill()
             if(not gradientStroke):
                 self.canvasContext.stroke()
